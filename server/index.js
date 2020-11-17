@@ -21,7 +21,7 @@ app.post('/add', async(req,res) => {
          res.json(newItem.rows[0])
 
     } catch (err) {
-        console.log(err.message)
+        res.json(err)
     }
 })
 

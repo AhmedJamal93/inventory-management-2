@@ -22,7 +22,8 @@ class AddItem extends Component{
             qtyonhand:null,
             cost:null,
             price:null,
-            errorAdd:false
+            errorAdd:false,
+            errorCode:'',
         }
     }
 
@@ -74,55 +75,21 @@ class AddItem extends Component{
         }
         axios.post('http://localhost:5000/add', newItem)
         .then(function(response){
-            console.log(response)
+            console.log(response.data)
+            if (response.data.code === '23505'){
+                alert('Item Code Already In Use')
+            } else {
+                alert('Item Successfully Added to Inventory')
+                window.location = '/add'
+            }
+            return response.data.code;
         })
         .catch(function(error){
             console.log(error.message)
         })
-        // axios.post('http://localhost:5000/add', newItem)
-        //     .then(res => {
-        //         console.log('It worked')
-        //         window.location = '/';
-        //         console.log(this.state.errorAdd) 
-        //     })
-        //     .catch(err => {
-        //         console.log(err.toJSON())
-        //     })
 
-    // async onSubmit(e) {
-    //     try {
-    //         e.preventDefault();
-    //         const newItem = {
-    //             itemcode: `${this.state.itemcodealpha} - ${this.state.itemcodenumeric}`,
-    //             description: this.state.description,
-    //             qtyonhand: this.state.qtyonhand,
-    //             cost: this.state.cost,
-    //             price: this.state.price,
-    //         }
+        console.log(this.state.errorCode)
 
-    //         await axios.post('http://localhost:5000/add', newItem)
-    //     } 
-    //     catch (error) {
-    //         console.log(error.message)
-    //     }
-    // }
-            // async function additem(){
-        //     try{
-        //         e.preventDefault();
-        //         const newItem = {
-        //             itemcode: `${this.state.itemcodealpha} - ${this.state.itemcodenumeric}`,
-        //             description: this.state.description,
-        //             qtyonhand: this.state.qtyonhand,
-        //             cost: this.state.cost,
-        //             price: this.state.price,
-        //         }
-
-        //         await axios.post('http://localhost:5000/add', newItem)
-        //     }catch(error){
-        //         console.log(error.message)
-        //     }
-            
-        // }
     }
 
 
