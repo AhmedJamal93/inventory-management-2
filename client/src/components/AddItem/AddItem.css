@@ -1,0 +1,15 @@
+input[type=number]{
+    width:80px;
+}
+
+input[type=number] {
+    background-color: lightgreen;
+}
+
+input[type=text] {
+    background-color: lightgreen;
+}
+
+input:required:invalid, input:focus:invalid{
+    background-color: pink;
+}
