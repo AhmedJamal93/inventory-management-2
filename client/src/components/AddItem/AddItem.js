@@ -73,25 +73,42 @@ class AddItem extends Component{
             cost: this.state.cost,
             price: this.state.price,
         }
-        axios.post('http://localhost:5000/add', newItem)
-        .then(function(response){
-            console.log(response.data)
-            if (response.data.code === '23505'){
+    
+    // Method #1
+    
+    //     axios.post('http://localhost:5000/add', newItem)
+    //     .then(function(response){
+    //         console.log(response.data)
+    //         if (response.data.code === '23505'){
+    //             alert('Item Code Already In Use')
+    //         } else {
+    //             alert('Item Successfully Added to Inventory')
+    //             window.location = '/add'
+    //         }
+    //         return response.data.code;
+    //     })
+    //     .catch(function(error){
+    //         console.log(error.message)
+    //     })
+    
+    // Method #2
+
+        axios.get('http://localhost:5000/add', {params:{itemcode:newItem.itemcode}})
+        .then(res => {
+            console.log(res.data)
+            if (res.data.rowCount > 0){
                 alert('Item Code Already In Use')
-            } else {
-                alert('Item Successfully Added to Inventory')
+            } else{
+                axios.post('http://localhost:5000/add', newItem)
+                alert('Item Successfully Added')
                 window.location = '/add'
             }
-            return response.data.code;
         })
-        .catch(function(error){
-            console.log(error.message)
+        .catch(err => {
+            console.log(err.message)
         })
-
-        console.log(this.state.errorCode)
-
     }
-
+        
 
     render(){
         return(

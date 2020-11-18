@@ -17,11 +17,23 @@ app.post('/add', async(req,res) => {
         const newItem = await pool.query("INSERT INTO items (itemcode, description, qtyonhand, cost, price) VALUES($1, $2, $3, $4, $5) RETURNING *",
          [itemcode, description, qtyonhand, cost, price]
          );
-
-         res.json(newItem.rows[0])
+        
+        res.json(newItem.rows[0])
 
     } catch (err) {
         res.json(err)
+    }
+})
+
+app.get('/add', async(req,res) => {
+    try {
+        const itemcode = req.query.itemcode
+        console.log(itemcode)
+        const checkItem = await pool.query("SELECT itemcode FROM items WHERE EXISTS (SELECT itemcode FROM items WHERE items.itemcode = $1)",[itemcode])
+        console.log(checkItem)
+        res.json(checkItem)
+    } catch (error) {
+        console.log(error)
     }
 })
 
