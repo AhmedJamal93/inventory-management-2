@@ -43,17 +43,6 @@ class DeleteItem extends Component{
     }
 
     onDelete(e){
-        // e.preventDefault();
-        // const updateItem = {
-        //     itemcode:this.state.itemcode,
-        //     description:this.state.description,
-        //     qtyonhand:this.state.qtyonhand,
-        //     cost:this.state.cost,
-        //     price:this.state.price
-        // }
-        // const params = {
-        //     updateItem
-        // }
         axios.delete('http://localhost:5000/items/:id', {data:{itemcode:this.state.itemcode}})
         .then(res => {
             alert(res.data)
