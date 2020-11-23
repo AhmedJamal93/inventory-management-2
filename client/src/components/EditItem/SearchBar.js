@@ -69,6 +69,17 @@ class SearchBar extends Component{
     // }
 
     onSearch(e){
+        // const getItem = axios.get('http://localhost:5000/items/:id', {params:{itemcode:this.state.itemcode}})
+        //                 .then(res => {
+        //                     return res.data.cost
+        //                 })
+        
+        // this.setState({
+        //     cost:getItem
+        // }, () => {console.log(this.state.cost)})
+
+
+
         axios.get('http://localhost:5000/items/:id', {params:{itemcode:this.state.itemcode}})
             .then(res => {
                 this.setState({
@@ -77,14 +88,17 @@ class SearchBar extends Component{
                     qtyonhand:res.data.qtyonhand,
                     cost:res.data.cost,
                     price:res.data.price
-                }, () => {
-                    this.props.onCodeEdit(this.state.itemcode)
-                    this.props.onDescriptionEdit(this.state.description)
-                    this.props.onQtyEdit(this.state.qtyonhand)
-                    this.props.onCostEdit(this.state.cost)
-                    this.props.onPriceEdit(this.state.price)
                 })
             })
+            .then(() => {
+                this.props.onCodeEdit(this.state.itemcode)
+                this.props.onDescriptionEdit(this.state.description)
+                this.props.onQtyEdit(this.state.qtyonhand)
+                this.props.onCostEdit(this.state.cost)
+                this.props.onPriceEdit(this.state.price)      
+            })
+
+            console.log(this.state.description)
     }
 
     render(){
@@ -114,7 +128,7 @@ class SearchBar extends Component{
                 />
                 <button
                     onClick={this.onSearch}>
-                    Search
+                        Search
                 </button>
                 <hr />
             </div>

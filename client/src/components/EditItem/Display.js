@@ -29,6 +29,7 @@ class Display extends Component{
         })
     }
 
+    
     onChangeQty(e){
         this.setState({
             qtyonhand: e.target.value
@@ -56,7 +57,6 @@ class Display extends Component{
             cost:this.state.cost,
             price:this.state.price
         }
-
         const params = {
             updateItem
         }
@@ -127,7 +127,6 @@ class Display extends Component{
                             value="Update"
                             className="mx-2 mb-4"
                         />
-                        
                         <Link to="/" className="mx-2 mb-4">
                             <a >Cancel</a>
                         </Link>

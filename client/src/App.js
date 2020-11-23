@@ -6,7 +6,7 @@ import Header2 from './components/Header/Header2';
 import Navbar from './components/Navbar/Navbar';
 import Sidebar from './components/Sidebar/Sidebar';
 import AddItem from './components/AddItem/AddItem';
-import EditItem from './components/EditItem/EditItem';
+import EditItem from './components/EditItem/EditItem2';
 import DeleteItem from './components/DeleteItem/DeleteItem';
 
 class App extends React.Component{

@@ -59,7 +59,7 @@ app.get('/items/:id', async(req,res) => {
         res.json(item.rows[0])
     } catch (err) {
         console.log(err.message)
-        res.json(err)
+        res.json('item does not exist')
     }
 })
 
@@ -67,7 +67,7 @@ app.get('/items/:id', async(req,res) => {
 
 app.put('/items/:id', async(req,res) => {
     try {
-        const {itemcode, description, qtyonhand, cost, price} = req.query.updateItem;
+        const {itemcode, description, qtyonhand, cost, price} = req.body;
 
         const updateItem = await pool.query('UPDATE items SET (description, qtyonhand, cost, price) = ($1,$2,$3,$4) WHERE itemcode = $5',
          [description, qtyonhand, cost, price, itemcode])
@@ -83,10 +83,10 @@ app.put('/items/:id', async(req,res) => {
 
 app.delete('/items/:id', async(req,res) => {
     try {
-        const {id} = req.params
-
-        const deleteItem = await pool.query('DELETE FROM items WHERE id = $1', 
-        [id])
+        const itemcode = req.body.itemcode;
+        console.log(itemcode)
+        const deleteItem = await pool.query("DELETE FROM items WHERE itemcode = $1", 
+        [itemcode])
 
         res.json('Item Deleted')
     } catch (err) {

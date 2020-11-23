@@ -3,14 +3,18 @@ import axios from 'axios';
 import {Link} from 'react-router-dom'
 
 
-class DeleteItem extends Component{
+class EditItem extends Component{
     constructor(props){
         super(props)
 
         this.onChangeCodeAlpha = this.onChangeCodeAlpha.bind(this);
         this.onChangeCodeNumeric = this.onChangeCodeNumeric.bind(this);
         this.onSearch = this.onSearch.bind(this);
-        this.onDelete = this.onDelete.bind(this);
+        this.onChangeCost = this.onChangeCost.bind(this);
+        this.onChangeDescription = this.onChangeDescription.bind(this);
+        this.onChangePrice = this.onChangePrice.bind(this);
+        this.onChangeQty = this.onChangeQty.bind(this);
+        this.onUpdate = this.onUpdate.bind(this);
         this.state = {
             itemcodealpha:'',
             itemcodenumeric:'',
@@ -42,22 +46,46 @@ class DeleteItem extends Component{
         })
     }
 
-    onDelete(e){
-        // e.preventDefault();
-        // const updateItem = {
-        //     itemcode:this.state.itemcode,
-        //     description:this.state.description,
-        //     qtyonhand:this.state.qtyonhand,
-        //     cost:this.state.cost,
-        //     price:this.state.price
-        // }
-        // const params = {
-        //     updateItem
-        // }
-        axios.delete('http://localhost:5000/items/:id', {data:{itemcode:this.state.itemcode}})
+    onChangeDescription(e){
+        this.setState({
+            description: e.target.value
+        })
+    }
+
+    onChangeQty(e){
+        this.setState({
+            qtyonhand: e.target.value
+        })
+    }
+
+    onChangeCost(e){
+        this.setState({
+            cost: e.target.value
+        })
+    }
+
+    onChangePrice(e){
+        this.setState({
+            price: e.target.value
+        })
+    }
+
+    onUpdate(e){
+        e.preventDefault();
+        const updateItem = {
+            itemcode:this.state.itemcode,
+            description:this.state.description,
+            qtyonhand:this.state.qtyonhand,
+            cost:this.state.cost,
+            price:this.state.price
+        }
+        const params = {
+            updateItem
+        }
+        axios.put('http://localhost:5000/items/:id', updateItem)
         .then(res => {
             alert(res.data)
-            window.location = '/delete'
+            window.location = '/edit'
         })
     }
 
@@ -80,7 +108,7 @@ class DeleteItem extends Component{
         return(
             <div className="text-center">
                 <div className="text-center">
-                    <b>Search Item Code (XX - ####) to Delete:</b>
+                    <b>Search Item Code (XX - ####) to Edit:</b>
                     <br />
                     <br />
                     <input 
@@ -116,35 +144,62 @@ class DeleteItem extends Component{
                     <b>There is no entry with that item code! Please try again!</b>
                 }
                 {this.state.description !== undefined && this.state.description.length >0 &&
-                    <form onSubmit={this.onDelete}>
+                    <form onSubmit={this.onUpdate}>
                         <div className="text-center">
                             <label> <b>Description:</b> </label>
                             <br />
-                            <label>{this.state.description}</label>
+                            <input 
+                                type="text" 
+                                className="mx-2"
+                                maxlength="30"
+                                size="30"
+                                required
+                                value={this.state.description}
+                                onChange={this.onChangeDescription}/>
                             <hr />
                         </div>
                         <div className="text-center">
                             <label> <b>Quantity On Hand:</b> </label>
                             <br />
-                            <label>{this.state.qtyonhand}</label>
+                            <input 
+                                type="number" 
+                                className="mx-2"
+                                min="0"
+                                required
+                                value={this.state.qtyonhand}
+                                onChange={this.onChangeQty}/>
                             <hr />
                         </div>
                         <div className="text-center">
                             <label> <b>Cost:</b> </label>
                             <br />
-                            <label>{this.state.cost}</label>
+                            <input 
+                                type="number" 
+                                className="mx-2"
+                                min="0"
+                                step=".01"
+                                required
+                                value={this.state.cost}
+                                onChange={this.onChangeCost}/>
                             <hr />
                         </div>
                         <div className="text-center">
                             <label> <b>Price:</b> </label>
                             <br />
-                            <label>{this.state.price}</label>
+                            <input 
+                                type="number" 
+                                className="mx-2"
+                                min="0"
+                                step=".01"
+                                required
+                                value={this.state.price}
+                                onChange={this.onChangePrice}/>
                             <hr />
                         </div>
                         <div className="text-center">
                             <input 
                                 type="submit"
-                                value="Delete"
+                                value="Update"
                                 className="mx-2 mb-4"
                                 />
                             
@@ -161,4 +216,4 @@ class DeleteItem extends Component{
     }
 }
 
-export default DeleteItem;
+export default EditItem;
