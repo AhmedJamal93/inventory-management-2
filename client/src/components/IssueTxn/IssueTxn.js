@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
-import AddOrder from './AddOrder';
+import IssueOrder from './IssueOrder';
 
 function findCode(array, attr, val) {
     for (let i = 0; i < array.length; i++) {
@@ -11,7 +11,7 @@ function findCode(array, attr, val) {
     }
   }
 
-class ReceiptTxn extends Component{
+class IssueTxn extends Component{
     constructor(props){
         super(props)
 
@@ -30,7 +30,7 @@ class ReceiptTxn extends Component{
             location:'',
             date:new Date(),
             totalqty:0,
-            howmanychange:3,
+            howmanychange:1,
             newitemcode:'',
             neworders:[],
             description:'',
@@ -83,7 +83,7 @@ class ReceiptTxn extends Component{
     onHowManyChange(e){
         if(e.target.value === ''){
             this.setState({
-                howmanychange:3
+                howmanychange:1
             })
         }else{
             this.setState({
@@ -141,7 +141,7 @@ class ReceiptTxn extends Component{
     render(){
         return(
             <div className='text-center'>
-                <h4 className="text-center"> <b>Receipt Transaction</b> </h4>
+                <h4 className="text-center"> <b>Issue Transaction</b> </h4>
                 <Link to='/supplier/add'>Add New Supplier</Link>
                 <div className="text-center">
                     <b>Search Supplier Code:</b>
@@ -189,7 +189,7 @@ class ReceiptTxn extends Component{
                             <br />
                             <label>{this.state.date.getDate()}</label>
                             -
-                            <label>{this.state.date.getMonth()+1}</label>
+                            <label>{this.state.date.getMonth()}</label>
                             -
                             <label>{this.state.date.getFullYear()}</label>
                         </div>
@@ -198,11 +198,11 @@ class ReceiptTxn extends Component{
                             type='number'
                             value={this.state.howmanychange}
                             onChange={this.onHowManyChange}
-                            min='3' />
+                            min='1' />
                         <hr />
                         {[...Array(this.state.howmanychange)].map((elementInArray, index) => ( 
                             <div className="" key={index}>
-                                    <AddOrder
+                                    <IssueOrder
                                         onCodeEdit={this.onChangeCode}
                                         onQuantityChange={this.onTotalQuantity}
                                         onIdChange={this.onChangeId}
@@ -226,4 +226,4 @@ class ReceiptTxn extends Component{
     }
 }
 
-export default ReceiptTxn;
+export default IssueTxn;

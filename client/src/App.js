@@ -10,6 +10,7 @@ import EditItem from './components/EditItem/EditItem2';
 import DeleteItem from './components/DeleteItem/DeleteItem';
 import ReceiptTxn from './components/ReceiptTxn/ReceiptTxn';
 import Supplier from './components/Supplier/Supplier';
+import IssueTxn from './components/IssueTxn/IssueTxn';
 
 
 
@@ -33,6 +34,7 @@ class App extends React.Component{
           <Route path='/edit' component={EditItem} />
           <Route path='/delete' component={DeleteItem} />
           <Route path='/receipt' component={ReceiptTxn} />
+          <Route path='/issue' component={IssueTxn} />
           <Route path='/supplier/add' component={Supplier} />
         </div>
       </Router>

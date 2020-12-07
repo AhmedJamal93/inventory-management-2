@@ -25,6 +25,10 @@ class Navbar extends Component{
         window.location = '/receipt'
     }
 
+    onIssueTxn(e){
+        window.location = '/issue'
+    }
+
     render(){
         return(
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -79,7 +83,7 @@ class Navbar extends Component{
                     <div class="modal-body">
                         <Link to='/receipt' ><a href="#" data-dismiss="modal" onClick={this.onReceiptTxn} >Receipt Transaction</a></Link>
                         <hr />
-                        <a href="#">Issue Transaction</a>
+                        <Link to='/receipt' ><a href="#" data-dismiss="modal" onClick={this.onIssueTxn} >Issue Transaction</a></Link>
                         <hr />
                         <a href="#">Return Transaction</a>
                         <hr />
