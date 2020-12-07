@@ -90,6 +90,7 @@ class EditItem extends Component{
     }
 
     onSearch(e){
+        e.preventDefault();
         axios.get('http://localhost:5000/items/:id', {params:{itemcode:this.state.itemcode}})
             .then(res => {
                 this.setState({

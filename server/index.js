@@ -25,6 +25,8 @@ app.post('/add', async(req,res) => {
     }
 })
 
+// Check if Itemcode exists
+
 app.get('/add', async(req,res) => {
     try {
         const itemcode = req.query.itemcode
@@ -47,6 +49,101 @@ app.get('/items', async(req,res) => {
         console.log(err.message)
     }
 })
+
+// Add new Supplier
+
+app.post('/supplier/add', async(req,res) => {
+    try {
+        const {name, location} = req.body
+        const newSupplier = await pool.query("INSERT INTO suppliers (name, location) VALUES($1, $2) RETURNING *",
+         [name, location]
+         );
+        
+        res.json(newSupplier.rows[0])
+
+    } catch (err) {
+        res.json(err)
+    }
+})
+
+// Check if Supplier exists
+
+app.get('/supplier/add', async(req,res) => {
+    try {
+        const name = req.query.name
+        const location = req.query.location
+        console.log(name)
+        console.log(location)
+        const checkSupplier = await pool.query("SELECT (name, location) FROM suppliers WHERE EXISTS (SELECT (name, location) FROM suppliers WHERE suppliers.name = $1 AND suppliers.location = $2)",[name, location])
+        console.log(checkSupplier)
+        res.json(checkSupplier)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+// update item quantity after transaction
+
+app.put('/transaction/update/:id', async(req,res) => {
+    try {
+        const {itemcode, quantity} = req.body;
+
+        const updateItem = await pool.query('UPDATE items SET (qtyonhand) = ROW($1) WHERE itemcode = $2',
+         [quantity, itemcode])
+
+        res.json('item was updated')
+    } catch (err) {
+        console.log(err.message)
+    }
+})
+
+// Add new receipt transaction
+
+app.post('/receipt/:id', async(req,res) => {
+    try {
+        const {date, supplier} = req.body
+        console.log(date, supplier)
+        const newReceipt = await pool.query("INSERT INTO transactions (transaction_date, supplier_id) VALUES($1, $2) RETURNING *",
+        [date, supplier]
+        );
+
+        res.json(newReceipt.rows[0])
+    } catch (error) {
+        res.json(error)
+    }
+})
+
+// Add new receipt transaction
+
+app.post('/transaction/:id', async(req,res) => {
+    try {
+        const {transaction, itemcode, quantity} = req.body
+        console.log(transaction, itemcode, quantity)
+        const newTrans = await pool.query("INSERT INTO transaction_detail (transaction_id, itemcode, quantity) VALUES($1, $2, $3) RETURNING *",
+        [transaction, itemcode, quantity]
+        );
+
+        res.json(newTrans.rows[0])
+    } catch (error) {
+        res.json(error)
+    }
+})
+
+// get Supplier
+
+app.get('/supplier/:id', async(req,res) => {
+    try {
+        const id = req.query.id
+        const supplier = await pool.query('SELECT * FROM suppliers WHERE id = $1',
+        [id]);
+
+        res.json(supplier.rows[0])
+    } catch (err) {
+        console.log(err.message)
+        res.json('supplier does not exist')
+    }
+})
+
 
 // get todo
 
@@ -94,20 +191,10 @@ app.delete('/items/:id', async(req,res) => {
     }
 })
 
-// Search by name
 
-app.get('/items/search/:name', async(req,res) => {
-    try {
-        const {name} = req.params
-        const item = await pool.query('SELECT * FROM items WHERE name = $1',
-        [name]);
-
-        res.json(item.rows[0])
-    } catch (err) {
-        console.log(err.message)
-    }
-})
 
 app.listen(5000, () => {
     console.log('Server has started on port 5000')
 });
+
+

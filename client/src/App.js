@@ -8,6 +8,11 @@ import Sidebar from './components/Sidebar/Sidebar';
 import AddItem from './components/AddItem/AddItem';
 import EditItem from './components/EditItem/EditItem2';
 import DeleteItem from './components/DeleteItem/DeleteItem';
+import ReceiptTxn from './components/ReceiptTxn/ReceiptTxn';
+import Supplier from './components/Supplier/Supplier';
+
+
+
 
 class App extends React.Component{
   constructor(props){
@@ -21,13 +26,15 @@ class App extends React.Component{
     return(
       <Router>
         <div>
-        <Header2 />
-        <Header />
-        <Navbar />
-        <Route path='/add' component={AddItem} />
-        <Route path='/edit' component={EditItem} />
-        <Route path='/delete' component={DeleteItem} />
-      </div>
+          <Header2 />
+          <Header />
+          <Navbar />
+          <Route path='/add' component={AddItem} />
+          <Route path='/edit' component={EditItem} />
+          <Route path='/delete' component={DeleteItem} />
+          <Route path='/receipt' component={ReceiptTxn} />
+          <Route path='/supplier/add' component={Supplier} />
+        </div>
       </Router>
     )
   }

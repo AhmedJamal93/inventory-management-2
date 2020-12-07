@@ -60,8 +60,6 @@ class DeleteItem extends Component{
                     cost:res.data.cost,
                     price:res.data.price
                 })
-
-                console.log(this.state.description)
             })
     }
 
