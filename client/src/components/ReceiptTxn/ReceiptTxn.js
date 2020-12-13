@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import AddOrder from './AddOrder';
+import NewWindow from 'react-new-window'
 
 function findCode(array, attr, val) {
     for (let i = 0; i < array.length; i++) {
@@ -23,6 +24,7 @@ class ReceiptTxn extends Component{
         this.onChangeId = this.onChangeId.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
         this.state = {
+            type:'Receipt',
             Suppid:null,
             Transid:null,
             id:null,
@@ -108,7 +110,8 @@ class ReceiptTxn extends Component{
         e.preventDefault();
         const info = {
             date:this.state.date,
-            supplier:this.state.Suppid
+            supplier:this.state.Suppid,
+            type:this.state.type
         }
 
         axios.post('http://localhost:5000/receipt/:id', info)
@@ -136,6 +139,7 @@ class ReceiptTxn extends Component{
                 })
             }
         })
+        window.location = '/receipt'
     }
 
     render(){

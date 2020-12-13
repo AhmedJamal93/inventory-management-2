@@ -23,6 +23,7 @@ class IssueTxn extends Component{
         this.onChangeId = this.onChangeId.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
         this.state = {
+            type:'Issue',
             Suppid:null,
             Transid:null,
             id:null,
@@ -108,7 +109,8 @@ class IssueTxn extends Component{
         e.preventDefault();
         const info = {
             date:this.state.date,
-            supplier:this.state.Suppid
+            supplier:this.state.Suppid,
+            type:this.state.type
         }
 
         axios.post('http://localhost:5000/receipt/:id', info)

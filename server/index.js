@@ -101,10 +101,10 @@ app.put('/transaction/update/:id', async(req,res) => {
 
 app.post('/receipt/:id', async(req,res) => {
     try {
-        const {date, supplier} = req.body
+        const {date, supplier, type} = req.body
         console.log(date, supplier)
-        const newReceipt = await pool.query("INSERT INTO transactions (transaction_date, supplier_id) VALUES($1, $2) RETURNING *",
-        [date, supplier]
+        const newReceipt = await pool.query("INSERT INTO transactions (transaction_date, supplier_id, type) VALUES($1, $2, $3) RETURNING *",
+        [date, supplier, type]
         );
 
         res.json(newReceipt.rows[0])
